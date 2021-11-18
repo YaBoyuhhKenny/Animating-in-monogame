@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Animating_in_monogame
 {
@@ -8,6 +10,10 @@ namespace Animating_in_monogame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        Random generator = new Random();
+        List<Color> colors = new List<Color>();
+        Color backgroundColor;
 
         Texture2D tribbleGreyTexture;
         Rectangle tribbleGrayRect;
@@ -24,6 +30,8 @@ namespace Animating_in_monogame
         Texture2D tribbleOrangeTexture;
         Rectangle tribbleOrangeRect;
         Vector2 tribbleOrangeSpeed;
+
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -45,6 +53,15 @@ namespace Animating_in_monogame
             
             tribbleOrangeRect = new Rectangle(300, 40, 100, 100);
             tribbleOrangeSpeed = new Vector2(20, 0);
+
+            for (int i = 0; i < 100; i++)
+            {
+                int r = generator.Next(256);               
+                int g = generator.Next(256);                
+                int b = generator.Next(256);
+                colors.Add(new Color(r, g, b));               
+            }
+
             base.Initialize();
         }
 
@@ -68,10 +85,22 @@ namespace Animating_in_monogame
             tribbleGrayRect.X += (int)tribbleGreySpeed.X;
             if (tribbleGrayRect.Right >= _graphics.PreferredBackBufferWidth || tribbleGrayRect.Left <= 0)
                 tribbleGreySpeed.X *= -1;
+                    
 
             tribbleGrayRect.Y += (int)tribbleGreySpeed.Y;
             if (tribbleGrayRect.Bottom >= _graphics.PreferredBackBufferHeight || tribbleGrayRect.Top <= 0 )
                 tribbleGreySpeed.Y *= -1;
+
+            //have it actually pull a value >:(
+
+            tribbleGrayRect.X += (int)tribbleGreySpeed.X;
+            if (tribbleGrayRect.Right >= _graphics.PreferredBackBufferWidth || tribbleGrayRect.Left <= 0)
+                GraphicsDevice.Clear(backgroundColor);
+
+
+            tribbleGrayRect.Y += (int)tribbleGreySpeed.Y;
+            if (tribbleGrayRect.Bottom >= _graphics.PreferredBackBufferHeight || tribbleGrayRect.Top <= 0)
+                GraphicsDevice.Clear(backgroundColor);
 
 
             tribbleBrownRect.X += (int)tribbleBrownSpeed.X;
@@ -98,7 +127,7 @@ namespace Animating_in_monogame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(backgroundColor);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
