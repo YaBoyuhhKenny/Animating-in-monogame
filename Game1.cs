@@ -16,20 +16,16 @@ namespace Animating_in_monogame
         Color backgroundColor;
 
         Texture2D tribbleGreyTexture;
-        Rectangle tribbleGreyRect;
-        Vector2 tribbleGreySpeed;
+        Tribble greyTribble;
 
         Texture2D tribbleBrownTexture;
-        Rectangle tribbleBrownRect;
-        Vector2 tribbleBrownSpeed;
+        Tribble brownTribble;
 
         Texture2D tribbleCreamTexture;
-        Rectangle tribbleCreamRect;
-        Vector2 tribbleCreamSpeed;
+        Tribble creamTribble;
 
         Texture2D tribbleOrangeTexture;
-        Rectangle tribbleOrangeRect;
-        Vector2 tribbleOrangeSpeed;
+        Tribble orangeTribble;
          
 
         public Game1()
@@ -41,18 +37,7 @@ namespace Animating_in_monogame
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            tribbleGreyRect = new Rectangle(300, 10, 100, 100);
-            tribbleGreySpeed = new Vector2(8, 6);
-            
-            tribbleBrownRect = new Rectangle(700, 0, 100, 100);
-            tribbleBrownSpeed = new Vector2(-10, 5);
-            
-            tribbleCreamRect = new Rectangle(400, 10, 100, 100);
-            tribbleCreamSpeed = new Vector2(0, 10);
-            
-            tribbleOrangeRect = new Rectangle(300, 40, 100, 100);
-            tribbleOrangeSpeed = new Vector2(20, 0);
+            // TODO: Add your initialization logic here           
 
             for (int i = 0; i < 100; i++)
             {
@@ -65,6 +50,10 @@ namespace Animating_in_monogame
             backgroundColor = colors[generator.Next(colors.Count)];
 
             base.Initialize();
+            greyTribble = new Tribble(tribbleGreyTexture, new Rectangle(300, 10, 100, 100), new Vector2(8, 6));
+            brownTribble = new Tribble(tribbleBrownTexture, new Rectangle(700, 0, 100, 100), new Vector2(-10, 5));
+            creamTribble = new Tribble(tribbleCreamTexture, new Rectangle(400, 10, 100, 100), new Vector2(0, 10));
+            orangeTribble = new Tribble(tribbleOrangeTexture, new Rectangle(300, 40, 100, 100), new Vector2(20, 0));
         }
 
         protected override void LoadContent()
@@ -76,49 +65,56 @@ namespace Animating_in_monogame
             tribbleBrownTexture = Content.Load<Texture2D>("tribbleBrown");
             tribbleCreamTexture = Content.Load<Texture2D>("tribbleCream");
             tribbleOrangeTexture = Content.Load<Texture2D>("tribbleOrange");
+            
         }
 
         protected override void Update(GameTime gameTime)
         {
+            greyTribble.Move();
+            if (greyTribble.Bounds.Top <= 0 || greyTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+            {
+                greyTribble.BounceTopBottom();
+            }
+            if (greyTribble.Bounds.Left <= 0 || greyTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+            {
+                greyTribble.BounceLeftRight();
+            }
+
+            brownTribble.Move();
+            if (brownTribble.Bounds.Top <= 0 || brownTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+            {
+                brownTribble.BounceTopBottom();
+            }
+            if (brownTribble.Bounds.Left <= 0 || brownTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+            {
+                brownTribble.BounceLeftRight();
+            }
+
+            creamTribble.Move();
+            if (creamTribble.Bounds.Top <= 0 || creamTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+            {
+                creamTribble.BounceTopBottom();
+            }
+            if (creamTribble.Bounds.Left <= 0 || creamTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+            {
+                creamTribble.BounceLeftRight();
+            }
+
+            orangeTribble.Move();
+            if (orangeTribble.Bounds.Top <= 0 || orangeTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+            {
+                orangeTribble.BounceTopBottom();
+            }
+            if (orangeTribble.Bounds.Left <= 0 || orangeTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+            {
+                orangeTribble.BounceLeftRight();
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
-            tribbleGreyRect.X += (int)tribbleGreySpeed.X;
-            if (tribbleGreyRect.Right >= _graphics.PreferredBackBufferWidth || tribbleGreyRect.Left <= 0)
-            {
-                tribbleGreySpeed.X *= -1;
-                backgroundColor = colors[generator.Next(colors.Count)];
-            }
-                
-                    
-
-            tribbleGreyRect.Y += (int)tribbleGreySpeed.Y;
-            if (tribbleGreyRect.Bottom >= _graphics.PreferredBackBufferHeight || tribbleGreyRect.Top <= 0 )
-            {
-                tribbleGreySpeed.Y *= -1;
-                backgroundColor = colors[generator.Next(colors.Count)];
-            }
-                
-
-
-            tribbleBrownRect.X += (int)tribbleBrownSpeed.X;
-            if (tribbleBrownRect.Right >= _graphics.PreferredBackBufferWidth || tribbleBrownRect.Left <= 0)
-                tribbleBrownSpeed.X *= -1;
-
-            tribbleBrownRect.Y += (int)tribbleBrownSpeed.Y;
-            if (tribbleBrownRect.Bottom >= _graphics.PreferredBackBufferHeight || tribbleBrownRect.Top <= 0)
-                tribbleBrownSpeed.Y *= -1;
             
-
-            tribbleCreamRect.Y += (int)tribbleCreamSpeed.Y;
-            if (tribbleCreamRect.Top > _graphics.PreferredBackBufferHeight)
-                tribbleCreamRect.Y = 0 - tribbleCreamRect.Height;
-            
-
-            tribbleOrangeRect.X += (int)tribbleOrangeSpeed.X;
-            if (tribbleOrangeRect.Left >= _graphics.PreferredBackBufferWidth)
-                tribbleOrangeRect.X = 0 - tribbleOrangeRect.Width;
             
 
             base.Update(gameTime);
@@ -132,13 +128,13 @@ namespace Animating_in_monogame
             _spriteBatch.Begin();
 
 
-            _spriteBatch.Draw(tribbleGreyTexture, tribbleGreyRect, Color.White);
+            _spriteBatch.Draw(greyTribble.Texture, greyTribble.Bounds, Color.White);
 
-            _spriteBatch.Draw(tribbleBrownTexture, tribbleBrownRect, Color.White);
+            _spriteBatch.Draw(brownTribble.Texture, brownTribble.Bounds, Color.White);
 
-            _spriteBatch.Draw(tribbleCreamTexture, tribbleCreamRect, Color.White);
-            
-            _spriteBatch.Draw(tribbleOrangeTexture, tribbleOrangeRect, Color.White);
+            _spriteBatch.Draw(creamTribble.Texture, creamTribble.Bounds, Color.White);
+
+            _spriteBatch.Draw(orangeTribble.Texture, orangeTribble.Bounds, Color.White);
 
 
             _spriteBatch.End();
