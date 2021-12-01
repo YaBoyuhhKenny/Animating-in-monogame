@@ -11,6 +11,7 @@ namespace Animating_in_monogame
         private Vector2 _speed;
         private Rectangle _rectangle;
         private Texture2D _texture;
+        
 
         public Tribble(Texture2D texture, Rectangle rectangle, Vector2 speed)
         {
@@ -45,5 +46,10 @@ namespace Animating_in_monogame
             _speed.Y *= -1;
         }
 
+
+        public void Draw(SpriteBatch _spriteBatch)
+        {
+            _spriteBatch.Draw(_texture, _rectangle, Color.White);
+        }
     }
 }

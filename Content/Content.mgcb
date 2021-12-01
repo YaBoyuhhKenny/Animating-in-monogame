@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Coo.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Coo.mp3
+
 #begin tribbleBrown.png
 /importer:TextureImporter
 /processor:TextureProcessor
