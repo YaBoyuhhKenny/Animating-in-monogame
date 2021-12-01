@@ -39,7 +39,15 @@ namespace Animating_in_monogame
         Tribble orangeTribble;
 
         SoundEffect Coo;
-        
+
+        MouseState mouseState;
+        Screen currentScreen;
+
+        enum Screen
+        {
+            Intro,
+            TribbleYard
+        }
 
         public Game1()
         {
@@ -68,6 +76,7 @@ namespace Animating_in_monogame
 
             backgroundColor = colors[generator.Next(colors.Count)];
 
+            currentScreen = Screen.Intro;
             base.Initialize();
 
 
@@ -95,87 +104,99 @@ namespace Animating_in_monogame
 
         protected override void Update(GameTime gameTime)
         {
-            greyTribble.Move();
-            if (greyTribble.Bounds.Top <= 0 || greyTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+            mouseState = Mouse.GetState();
+
+            if (currentScreen == Screen.Intro)
             {
-                greyTribble.BounceTopBottom();
-                backgroundColor = colors[generator.Next(colors.Count)];
-                Coo.Play();
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                    currentScreen = Screen.TribbleYard;
             }
-            if (greyTribble.Bounds.Left <= 0 || greyTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+            else if(currentScreen == Screen.TribbleYard)
             {
-                greyTribble.BounceLeftRight();
-                backgroundColor = colors[generator.Next(colors.Count)];
-                Coo.Play();
+                greyTribble.Move();
+                if (greyTribble.Bounds.Top <= 0 || greyTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    greyTribble.BounceTopBottom();
+                    backgroundColor = colors[generator.Next(colors.Count)];
+                    Coo.Play();
+                }
+                if (greyTribble.Bounds.Left <= 0 || greyTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    greyTribble.BounceLeftRight();
+                    backgroundColor = colors[generator.Next(colors.Count)];
+                    Coo.Play();
+                }
+
+                brownTribble.Move();
+                if (brownTribble.Bounds.Top <= 0 || brownTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    brownTribble.BounceTopBottom();
+                    backgroundColor = colors[generator.Next(colors.Count)];
+                    Coo.Play();
+                }
+                if (brownTribble.Bounds.Left <= 0 || brownTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    brownTribble.BounceLeftRight();
+                    backgroundColor = colors[generator.Next(colors.Count)];
+                    Coo.Play();
+                }
+
+                creamTribble.Move();
+                if (creamTribble.Bounds.Top <= 0 || creamTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    creamTribble.BounceTopBottom();
+                }
+                if (creamTribble.Bounds.Left <= 0 || creamTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    creamTribble.BounceLeftRight();
+                }
+
+                blueTribble.Move();
+                if (blueTribble.Bounds.Top <= 0 || blueTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    blueTribble.BounceTopBottom();
+                }
+                if (blueTribble.Bounds.Left <= 0 || blueTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    blueTribble.BounceLeftRight();
+                }
+
+                purpleTribble.Move();
+                if (purpleTribble.Bounds.Top <= 0 || purpleTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    purpleTribble.BounceTopBottom();
+                }
+                if (purpleTribble.Bounds.Left <= 0 || purpleTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    purpleTribble.BounceLeftRight();
+                }
+
+                rgbTribble.Move();
+                if (rgbTribble.Bounds.Top <= 0 || rgbTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    rgbTribble.BounceTopBottom();
+                    backgroundColor = colors[generator.Next(colors.Count)];
+                    Coo.Play();
+                }
+                if (rgbTribble.Bounds.Left <= 0 || rgbTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    rgbTribble.BounceLeftRight();
+                    backgroundColor = colors[generator.Next(colors.Count)];
+                    Coo.Play();
+                }
+
+                orangeTribble.Move();
+                if (orangeTribble.Bounds.Top <= 0 || orangeTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
+                {
+                    orangeTribble.BounceTopBottom();
+                }
+                if (orangeTribble.Bounds.Left <= 0 || orangeTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
+                {
+                    orangeTribble.BounceLeftRight();
+                }
             }
 
-            brownTribble.Move();
-            if (brownTribble.Bounds.Top <= 0 || brownTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
-            {
-                brownTribble.BounceTopBottom();
-                backgroundColor = colors[generator.Next(colors.Count)];
-                Coo.Play();
-            }
-            if (brownTribble.Bounds.Left <= 0 || brownTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
-            {
-                brownTribble.BounceLeftRight();
-                backgroundColor = colors[generator.Next(colors.Count)];
-                Coo.Play();
-            }
-
-            creamTribble.Move();
-            if (creamTribble.Bounds.Top <= 0 || creamTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
-            {
-                creamTribble.BounceTopBottom();
-            }
-            if (creamTribble.Bounds.Left <= 0 || creamTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
-            {
-                creamTribble.BounceLeftRight();                
-            }
-
-            blueTribble.Move();
-            if (blueTribble.Bounds.Top <= 0 || blueTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
-            {
-                blueTribble.BounceTopBottom();
-            }
-            if (blueTribble.Bounds.Left <= 0 || blueTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
-            {
-                blueTribble.BounceLeftRight();
-            }
-
-            purpleTribble.Move();
-            if (purpleTribble.Bounds.Top <= 0 || purpleTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
-            {
-                purpleTribble.BounceTopBottom();
-            }
-            if (purpleTribble.Bounds.Left <= 0 || purpleTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
-            {
-                purpleTribble.BounceLeftRight();
-            }
-
-            rgbTribble.Move();
-            if (rgbTribble.Bounds.Top <= 0 || rgbTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
-            {
-                rgbTribble.BounceTopBottom();
-                backgroundColor = colors[generator.Next(colors.Count)];
-                Coo.Play();
-            }
-            if (rgbTribble.Bounds.Left <= 0 || rgbTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
-            {
-                rgbTribble.BounceLeftRight();
-                backgroundColor = colors[generator.Next(colors.Count)];
-                Coo.Play();
-            }
-
-            orangeTribble.Move();
-            if (orangeTribble.Bounds.Top <= 0 || orangeTribble.Bounds.Bottom >= _graphics.PreferredBackBufferHeight)
-            {
-                orangeTribble.BounceTopBottom();               
-            }
-            if (orangeTribble.Bounds.Left <= 0 || orangeTribble.Bounds.Right >= _graphics.PreferredBackBufferWidth)
-            {
-                orangeTribble.BounceLeftRight();               
-            }
+            
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -194,21 +215,27 @@ namespace Animating_in_monogame
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
+            if (currentScreen == Screen.Intro)
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                    currentScreen = Screen.TribbleYard;
+            }
+            else if (currentScreen == Screen.TribbleYard)
+            {
+                greyTribble.Draw(_spriteBatch);
 
-            greyTribble.Draw(_spriteBatch);
+                _spriteBatch.Draw(rgbTribble.Texture, rgbTribble.Bounds, backgroundColor);
 
-            _spriteBatch.Draw(rgbTribble.Texture, rgbTribble.Bounds, backgroundColor);
+                _spriteBatch.Draw(purpleTribble.Texture, purpleTribble.Bounds, Color.Purple);
 
-            _spriteBatch.Draw(purpleTribble.Texture, purpleTribble.Bounds, Color.Purple);
+                _spriteBatch.Draw(blueTribble.Texture, blueTribble.Bounds, Color.Blue);
 
-            _spriteBatch.Draw(blueTribble.Texture, blueTribble.Bounds, Color.Blue);
+                brownTribble.Draw(_spriteBatch);
 
-            brownTribble.Draw(_spriteBatch);
+                creamTribble.Draw(_spriteBatch);
 
-            creamTribble.Draw(_spriteBatch);
-
-            orangeTribble.Draw(_spriteBatch);
-
+                orangeTribble.Draw(_spriteBatch);
+            }
 
             _spriteBatch.End();
 
