@@ -35,6 +35,8 @@ namespace Animating_in_monogame
         Texture2D tribbleCreamTexture;
         Tribble creamTribble;
 
+        Texture2D tribbleIntroTexture;
+
         Texture2D tribbleOrangeTexture;
         Tribble orangeTribble;
 
@@ -99,7 +101,7 @@ namespace Animating_in_monogame
             tribbleCreamTexture = Content.Load<Texture2D>("tribbleCream");
             tribbleOrangeTexture = Content.Load<Texture2D>("tribbleOrange");
             Coo = Content.Load<SoundEffect>("Coo");
-            
+            tribbleIntroTexture = Content.Load<Texture2D>("tribble_intro");
         }
 
         protected override void Update(GameTime gameTime)
@@ -217,6 +219,7 @@ namespace Animating_in_monogame
 
             if (currentScreen == Screen.Intro)
             {
+                _spriteBatch.Draw(tribbleIntroTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                 if (mouseState.LeftButton == ButtonState.Pressed)
                     currentScreen = Screen.TribbleYard;
             }
